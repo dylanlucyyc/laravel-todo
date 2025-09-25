@@ -7,8 +7,13 @@ use Illuminate\Support\Facades\Route;
 // PUT -> Modify 
 // DELETE -> Delete
 
+
+// Pass in a second argument to pass variables to template
+// HTML tags are not allowed
 Route::get('/', function () {
-    return 'Main Page';
+    return view('index', [
+        'name' => 'Dylan Luc'
+    ]);
 });
 
 Route::get('/hello', function(){
