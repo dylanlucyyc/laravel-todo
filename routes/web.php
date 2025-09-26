@@ -6,6 +6,7 @@
 use Illuninate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 Route::get('/', function(){
     return redirect()->route('tasks.index');
@@ -26,12 +27,30 @@ Route::view('/tasks/create', 'create')->name('task.create');
 
 Route::get('/{id}', function ($id) {
     return view('show', [
-      'task' => \App\Models\Task::findOrFail($id)
+      'task' => Task::findOrFail($id)
     ]);
 })->name('tasks.show');
 
 Route::post('/tasks', function(Request $request) {
-    dd($request->all());
+
+    // If doesn't pass validation, Laravel will redirect user to the last page and it will set a session variable called erorr.
+    // This session contain all this error info and can be used to display error next to the form inputs
+    $data = $request->validate([
+        'title'=> 'required|max:255',
+        'description' => 'required',
+        'long_description'=> 'required'
+    ]);
+
+    $task = new Task;
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
+
+
+    //tell db to run an insert query
+    $task->save();
+
+    return redirect()->route('tasks.show', ['id'=> $task->id]);
 })-> name('tasks.store');
 
 // Fallback route
