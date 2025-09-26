@@ -9,7 +9,7 @@
                               <li> <a href="{{ route('tasks.show',['id' => $task->id]) }}">{{ $task->title }}</a></li>
                               @endforeach
                     </ul>
-                              
+
           @else
                     <div>There are no tasks</div>
           @endif
