@@ -50,7 +50,7 @@ Route::post('/tasks', function(Request $request) {
     //tell db to run an insert query
     $task->save();
 
-    return redirect()->route('tasks.show', ['id'=> $task->id]);
+    return redirect()->route('tasks.show', ['id'=> $task->id])->with('success', 'Task created successfully!');
 })-> name('tasks.store');
 
 // Fallback route
