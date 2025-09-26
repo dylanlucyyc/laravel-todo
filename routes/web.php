@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 use Illuninate\Http\Response;
